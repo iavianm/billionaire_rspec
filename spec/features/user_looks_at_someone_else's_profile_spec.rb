@@ -8,7 +8,7 @@ RSpec.feature 'USER show profile', type: :feature do
   let(:user1) { FactoryGirl.create :user, name: 'user1', id: 1 }
   let(:user2) { FactoryGirl.create :user, name: 'user2', id: 2 }
 
-  let!(:games) do
+  before do
     FactoryGirl.create(
       :game_with_questions,
       user: user2,
@@ -23,10 +23,7 @@ RSpec.feature 'USER show profile', type: :feature do
       current_level: 14,
       prize: 500_000
     )
-  end
 
-  # Перед началом любого сценария нам надо авторизовать пользователя
-  before do
     login_as user1
   end
 
