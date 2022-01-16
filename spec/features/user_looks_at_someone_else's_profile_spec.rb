@@ -12,21 +12,21 @@ RSpec.feature 'USER show profile', type: :feature do
     FactoryGirl.create(
       :game_with_questions,
       user: user2,
-      created_at: Time.new(2022,01,15,10,00),
+      created_at: Time.new(2022, 0o1, 15, 10, 0o0),
       current_level: 14,
-      prize: 500000,
+      prize: 500_000
     )
     FactoryGirl.create(
       :game_with_questions,
       user: user2,
-      created_at: Time.new(2022,01,16,10,00),
+      created_at: Time.new(2022, 0o1, 16, 10, 0o0),
       current_level: 14,
-      prize: 500000,
+      prize: 500_000
     )
   end
 
   # Перед началом любого сценария нам надо авторизовать пользователя
-  before(:each) do
+  before do
     login_as user1
   end
 
