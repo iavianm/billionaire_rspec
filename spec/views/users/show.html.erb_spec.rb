@@ -29,4 +29,22 @@ RSpec.describe 'users/show', type: :view do
       expect(rendered).to match 'User game goes here'
     end
   end
+
+  context 'current user' do
+    let(:user) { FactoryGirl.create(:user, name: 'Вадик') }
+    before do
+      assign(:user, user)
+      sign_in user
+
+      render
+    end
+
+    it 'renders user name' do
+      expect(rendered).to match 'Вадик'
+    end
+
+    it 'renders edit button' do
+      expect(rendered).to match 'Сменить имя и пароль'
+    end
+  end
 end
