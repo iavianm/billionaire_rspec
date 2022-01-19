@@ -84,14 +84,14 @@ RSpec.describe Game, type: :model do
   end
 
   describe '#answer_current_question!' do
-    it 'answer not correct finish game' do
-      expect(game_w_questions.answer_current_question!('c')).to eq(false)
-      expect(game_w_questions.status).to eq(:fail)
-      expect(game_w_questions.finished?).to be(true)
+    context 'answer not correct finish game' do
+      it 'answer is not correct?' do
+        expect(game_w_questions.answer_current_question!('c')).to eq(false)
+        expect(game_w_questions.status).to eq(:fail)
+        expect(game_w_questions.finished?).to be(true)
+      end
     end
-  end
 
-  describe '.status' do
     context 'when the game is finished' do
       before { game_w_questions.finished_at = Time.now }
 
