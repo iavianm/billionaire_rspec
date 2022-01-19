@@ -81,7 +81,7 @@ RSpec.describe Game, type: :model do
     end
 
     it 'current_game_question' do
-      expect(game_w_questions.current_game_question).to be_a(GameQuestion)
+      expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions.first)
     end
 
     it 'previous_level' do
