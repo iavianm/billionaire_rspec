@@ -60,7 +60,7 @@ RSpec.describe GamesController, type: :controller do
   # группа тестов на экшены контроллера, доступных залогиненным юзерам
   context 'Usual user' do
     # перед каждым тестом в группе
-    before(:each) { sign_in user } # логиним юзера user с помощью спец. Devise метода sign_in
+    before { sign_in user } # логиним юзера user с помощью спец. Devise метода sign_in
 
     # юзер может создать новую игру
     it 'creates game' do
@@ -103,7 +103,7 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe '#help' do
-    before(:each) { sign_in user }
+    before { sign_in user }
     # тест на отработку "помощи зала"
     it 'uses audience help' do
       # сперва проверяем что в подсказках текущего вопроса пусто
@@ -161,7 +161,7 @@ RSpec.describe GamesController, type: :controller do
 
   describe '#answer' do
     context 'when answer is wrong' do
-      before(:each) { sign_in user }
+      before { sign_in user }
 
       it 'should finish game' do
         put :answer, id: game_w_questions.id, letter: game_w_questions.answer_current_question!('c')
