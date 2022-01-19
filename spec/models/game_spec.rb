@@ -74,18 +74,20 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.finished?).to be_falsey
     end
 
-    it 'answer not correct finish game' do
-      expect(game_w_questions.answer_current_question!('c')).to eq(false)
-      expect(game_w_questions.status).to eq(:fail)
-      expect(game_w_questions.finished?).to be(true)
-    end
-
     it 'current_game_question' do
       expect(game_w_questions.current_game_question).to eq(game_w_questions.game_questions.first)
     end
 
     it 'previous_level' do
       expect(game_w_questions.previous_level).to eq(game_w_questions.current_level - 1)
+    end
+  end
+
+  describe '#answer_current_question!' do
+    it 'answer not correct finish game' do
+      expect(game_w_questions.answer_current_question!('c')).to eq(false)
+      expect(game_w_questions.status).to eq(:fail)
+      expect(game_w_questions.finished?).to be(true)
     end
   end
 
