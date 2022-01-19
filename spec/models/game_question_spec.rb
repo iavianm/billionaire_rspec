@@ -24,18 +24,20 @@ RSpec.describe GameQuestion, type: :model do
       )
     end
 
-    it 'correct .answer_correct?' do
-      # Именно под буквой b в тесте мы спрятали указатель на верный ответ
-      expect(game_question.answer_correct?('b')).to be_truthy
-    end
-
-    it 'correct .correct_answer_key' do
-      expect(game_question.correct_answer_key).to eq('b')
-    end
-
     it 'correct delegate .text and .level' do
       expect(game_question.text).to eq(game_question.question.text)
       expect(game_question.level).to eq(game_question.question.level)
+    end
+
+    describe '#answer_correct' do
+      it 'correct .answer_correct?' do
+        # Именно под буквой b в тесте мы спрятали указатель на верный ответ
+        expect(game_question.answer_correct?('b')).to be_truthy
+      end
+
+      it '.correct_answer_key' do
+        expect(game_question.correct_answer_key).to eq('b')
+      end
     end
 
     #---------- Вариант решения ДЗ  --------------------
