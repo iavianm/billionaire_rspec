@@ -44,9 +44,5 @@ RSpec.feature 'USER show profile', type: :feature do
     expect(page).to have_content 'в процессе'
 
     expect(page).not_to have_content 'Сменить имя и пароль'
-    # В процессе работы можно использовать
-    # save_and_open_page
-    # но в конечном коде (который вы кладете в репозиторий)
-    # этого кода быть не должно, также, как и byebug
   end
 end
