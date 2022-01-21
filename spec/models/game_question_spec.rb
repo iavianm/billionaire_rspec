@@ -29,14 +29,14 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.level).to eq(game_question.question.level)
     end
 
-    describe '#answer_correct' do
-      it 'correct .answer_correct?' do
-        # Именно под буквой b в тесте мы спрятали указатель на верный ответ
-        expect(game_question.answer_correct?('b')).to be_truthy
+    describe '#correct_answer_key' do
+      it 'check correct_answer_key' do
+        expect(game_question.correct_answer_key).to eq('b')
       end
 
-      it '.correct_answer_key' do
-        expect(game_question.correct_answer_key).to eq('b')
+      it 'check answer_correct?' do
+        # Именно под буквой b в тесте мы спрятали указатель на верный ответ
+        expect(game_question.answer_correct?('b')).to be_truthy
       end
     end
 

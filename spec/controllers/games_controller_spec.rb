@@ -103,59 +103,71 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe '#help' do
-    before { sign_in user }
+    context 'when uses audience help' do
+
+      before { sign_in user }
+
     # тест на отработку "помощи зала"
-    it 'uses audience help' do
-      # сперва проверяем что в подсказках текущего вопроса пусто
-      expect(game_w_questions.current_game_question.help_hash[:audience_help]).not_to be
-      expect(game_w_questions.audience_help_used).to be_falsey
+      it 'audience help' do
+        # сперва проверяем что в подсказках текущего вопроса пусто
+        expect(game_w_questions.current_game_question.help_hash[:audience_help]).not_to be
+        expect(game_w_questions.audience_help_used).to be_falsey
 
-      # фигачим запрос в контроллен с нужным типом
-      put :help, id: game_w_questions.id, help_type: :audience_help
-      game = assigns(:game)
+        # фигачим запрос в контроллен с нужным типом
+        put :help, id: game_w_questions.id, help_type: :audience_help
+        game = assigns(:game)
 
-      # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
-      expect(game.finished?).to be_falsey
-      expect(game.audience_help_used).to be_truthy
-      expect(game.current_game_question.help_hash[:audience_help]).to be
-      expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
-      expect(response).to redirect_to(game_path(game))
+        # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
+        expect(game.finished?).to be_falsey
+        expect(game.audience_help_used).to be_truthy
+        expect(game.current_game_question.help_hash[:audience_help]).to be
+        expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
+        expect(response).to redirect_to(game_path(game))
+      end
     end
 
+    context 'when uses fifty_fifty' do
+
+      before { sign_in user }
     # тест на отработку "50/50"
-    it 'uses fifty_fifty' do
-      # сперва проверяем что в подсказках текущего вопроса пусто
-      expect(game_w_questions.current_game_question.help_hash[:fifty_fifty]).not_to be
-      expect(game_w_questions.fifty_fifty_used).to be(false)
+      it 'fifty_fifty' do
+        # сперва проверяем что в подсказках текущего вопроса пусто
+        expect(game_w_questions.current_game_question.help_hash[:fifty_fifty]).not_to be
+        expect(game_w_questions.fifty_fifty_used).to be(false)
 
-      # фигачим запрос в контроллен с нужным типом
-      put :help, id: game_w_questions.id, help_type: :fifty_fifty
-      game = assigns(:game)
+        # фигачим запрос в контроллен с нужным типом
+        put :help, id: game_w_questions.id, help_type: :fifty_fifty
+        game = assigns(:game)
 
-      # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
-      expect(game.finished?).to be(false)
-      expect(game.fifty_fifty_used).to be(true)
-      expect(game.current_game_question.help_hash[:fifty_fifty]).to be
-      expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq(2)
-      expect(response).to redirect_to(game_path(game))
+        # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
+        expect(game.finished?).to be(false)
+        expect(game.fifty_fifty_used).to be(true)
+        expect(game.current_game_question.help_hash[:fifty_fifty]).to be
+        expect(game.current_game_question.help_hash[:fifty_fifty].size).to eq(2)
+        expect(response).to redirect_to(game_path(game))
+      end
     end
 
+    context 'when uses call_friend' do
+
+      before { sign_in user }
     # тест на отработку "звонок другу"
-    it 'uses call_friend' do
-      # сперва проверяем что в подсказках текущего вопроса пусто
-      expect(game_w_questions.current_game_question.help_hash[:friend_call]).not_to be
-      expect(game_w_questions.friend_call_used).to be(false)
+      it 'call_friend' do
+        # сперва проверяем что в подсказках текущего вопроса пусто
+        expect(game_w_questions.current_game_question.help_hash[:friend_call]).not_to be
+        expect(game_w_questions.friend_call_used).to be(false)
 
-      # фигачим запрос в контроллен с нужным типом
-      put :help, id: game_w_questions.id, help_type: :friend_call
-      game = assigns(:game)
+        # фигачим запрос в контроллен с нужным типом
+        put :help, id: game_w_questions.id, help_type: :friend_call
+        game = assigns(:game)
 
-      # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
-      expect(game.finished?).to be(false)
-      expect(game.friend_call_used).to be(true)
-      expect(game.current_game_question.help_hash[:friend_call]).to be
-      expect(game.current_game_question.help_hash[:friend_call]).to match('считает, что это вариант')
-      expect(response).to redirect_to(game_path(game))
+        # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
+        expect(game.finished?).to be(false)
+        expect(game.friend_call_used).to be(true)
+        expect(game.current_game_question.help_hash[:friend_call]).to be
+        expect(game.current_game_question.help_hash[:friend_call]).to match('считает, что это вариант')
+        expect(response).to redirect_to(game_path(game))
+      end
     end
   end
 
