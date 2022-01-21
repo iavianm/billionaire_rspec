@@ -71,7 +71,7 @@ RSpec.describe GamesController, type: :controller do
       game = assigns(:game) # вытаскиваем из контроллера поле @game
 
       # проверяем состояние этой игры
-      expect(game.finished?).to be_falsey
+      expect(game.finished?).to be(false)
       expect(game.user).to eq(user)
       # и редирект на страницу этой игры
       expect(response).to redirect_to(game_path(game))
@@ -82,7 +82,7 @@ RSpec.describe GamesController, type: :controller do
     it '#show game' do
       get :show, id: game_w_questions.id
       game = assigns(:game) # вытаскиваем из контроллера поле @game
-      expect(game.finished?).to be_falsey
+      expect(game.finished?).to be(false)
       expect(game.user).to eq(user)
 
       expect(response.status).to eq(200) # должен быть ответ HTTP 200
@@ -95,7 +95,7 @@ RSpec.describe GamesController, type: :controller do
       put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
       game = assigns(:game)
 
-      expect(game.finished?).to be_falsey
+      expect(game.finished?).to be(false)
       expect(game.current_level).to be > 0
       expect(response).to redirect_to(game_path(game))
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
@@ -111,15 +111,15 @@ RSpec.describe GamesController, type: :controller do
       it 'audience help' do
         # сперва проверяем что в подсказках текущего вопроса пусто
         expect(game_w_questions.current_game_question.help_hash[:audience_help]).not_to be
-        expect(game_w_questions.audience_help_used).to be_falsey
+        expect(game_w_questions.audience_help_used).to be(false)
 
         # фигачим запрос в контроллен с нужным типом
         put :help, id: game_w_questions.id, help_type: :audience_help
         game = assigns(:game)
 
         # проверяем, что игра не закончилась, что флажок установился, и подсказка записалась
-        expect(game.finished?).to be_falsey
-        expect(game.audience_help_used).to be_truthy
+        expect(game.finished?).to be(false)
+        expect(game.audience_help_used).to be(true)
         expect(game.current_game_question.help_hash[:audience_help]).to be
         expect(game.current_game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
         expect(response).to redirect_to(game_path(game))
