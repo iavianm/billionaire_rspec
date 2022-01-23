@@ -83,7 +83,7 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.previous_level).to eq(- 1)
       #в процессе
       game_w_questions.current_level = 10
-      expect(game_w_questions.previous_level).to eq(game_w_questions.current_level - 1)
+      expect(game_w_questions.previous_level).to eq(9)
     end
   end
 
