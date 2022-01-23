@@ -90,7 +90,6 @@ RSpec.describe Game, type: :model do
   describe '#answer_current_question!' do
     context 'when answer is wrong' do
       let(:wrong_answer_key) { game_w_questions.answer_current_question!('c') }
-
       before { game_w_questions.answer_current_question!(wrong_answer_key) }
 
       it 'should finish game with status fail' do
@@ -121,7 +120,6 @@ RSpec.describe Game, type: :model do
       end
 
       context 'and question is not last' do
-
         before do
           game_w_questions.current_level = 10
           game_w_questions.answer_current_question!(q.correct_answer_key)
@@ -137,13 +135,16 @@ RSpec.describe Game, type: :model do
       end
 
       context 'and time is out ' do
-
+        let(:correct_answer_key) { game_w_questions.answer_current_question!('d') }
+        before { correct_answer_key }
         before { game_w_questions.finished_at = Time.now }
 
         it 'should finish game with status timeout' do
-          game_w_questions.created_at = 36.minutes.ago
-          game_w_questions.is_failed = true
+          game_w_questions.created_at = 40.minutes.ago
+          game_w_questions.answer_current_question!(correct_answer_key)
+          expect(correct_answer_key).to eq(true)
           expect(game_w_questions.status).to eq(:timeout)
+          expect(game_w_questions.finished?).to be(true)
         end
       end
     end
