@@ -136,13 +136,10 @@ RSpec.describe Game, type: :model do
 
       context 'and time is out ' do
         let(:correct_answer_key) { game_w_questions.answer_current_question!('d') }
-        before { correct_answer_key }
-        before { game_w_questions.finished_at = Time.now }
 
         it 'should finish game with status timeout' do
           game_w_questions.created_at = 40.minutes.ago
           game_w_questions.answer_current_question!(correct_answer_key)
-          expect(correct_answer_key).to eq(true)
           expect(game_w_questions.status).to eq(:timeout)
           expect(game_w_questions.finished?).to be(true)
         end
